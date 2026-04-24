@@ -1,0 +1,17 @@
+commit-msg:
+  commands:
+    commitlint:
+      run: pnpm commitlint --edit {1}
+
+pre-commit:
+  commands:
+    check:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,vue,json,jsonc}"
+      run: pnpm biome check --write --staged --files-ignore-unknown=true --no-errors-on-unmatched
+      stage_fixed: true
+
+pre-push:
+  commands:
+    check:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,vue,json,jsonc}"
+      run: pnpm biome check --write --files-ignore-unknown=true --no-errors-on-unmatched
