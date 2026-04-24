@@ -15,7 +15,8 @@ hono-admin-monorepo: Monorepo with Hono API server and Vue 3 web admin panel.
 │   ├── api/          # Hono REST API (Node adapter)
 │   └── web/          # Vue 3 + Vite admin panel
 ├── node_modules/
-├── biome.json       # Lint + format (space indent, 100 width)
+├── eslint.config.js   # ESLint 9 config (TypeScript + Vue)
+├── .prettierrc      # Prettier config (2 space, 100 width)
 ├── lefthook.yml     # Git hooks (pre-commit, pre-push)
 └── tsconfig.base.json
 ```
@@ -49,7 +50,7 @@ hono-admin-monorepo: Monorepo with Hono API server and Vue 3 web admin panel.
 
 - Don't use `@ts-ignore`, `@ts-expect-error`, or `as any`
 - No empty catch blocks
-- Don't suppress biome rules
+- Don't suppress ESLint rules
 
 ## COMMANDS
 
@@ -58,9 +59,10 @@ pnpm dev          # Start all apps
 pnpm dev:api      # API only
 pnpm dev:web     # Web only
 pnpm build        # Build all
-pnpm lint         # Biome lint
-pnpm format       # Biome format
-pnpm check        # Biome check --write
+pnpm lint         # ESLint
+pnpm lint:fix     # ESLint --fix
+pnpm format       # Prettier format
+pnpm check        # lint + format --check
 ```
 
 ## NOTES

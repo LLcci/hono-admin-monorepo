@@ -5,13 +5,14 @@ commit-msg:
 
 pre-commit:
   commands:
-    check:
-      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,vue,json,jsonc}"
-      run: pnpm biome check --write --staged --files-ignore-unknown=true --no-errors-on-unmatched
+    lint:
+      glob: '*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,vue,json,jsonc}'
+      run: pnpm lint --fix
       stage_fixed: true
 
 pre-push:
   commands:
-    check:
-      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,vue,json,jsonc}"
-      run: pnpm biome check --write --files-ignore-unknown=true --no-errors-on-unmatched
+    lint:
+      glob: '*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,vue,json,jsonc}'
+      run: pnpm lint
+

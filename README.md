@@ -16,7 +16,8 @@ Hono REST API + Vue 3 管理面板单仓项目。
 
 ### 工具链
 - **pnpm** - 高性能包管理器
-- **Biome** - 代码格式化和 Lint
+- **ESLint** - 代码检查
+- **Prettier** - 代码格式化
 - **TypeScript** - 类型安全
 - **lefthook** - Git hooks
 
@@ -47,7 +48,8 @@ Hono REST API + Vue 3 管理面板单仓项目。
 │           └── main.ts   # 入口文件
 │
 ├── node_modules/
-├── biome.json            # Biome 配置
+├── eslint.config.js         # ESLint 配置
+├── .prettierrc           # Prettier 配置
 ├── lefthook.yml          # Git hooks 配置
 └── tsconfig.base.json    # TypeScript 基础配置
 ```
