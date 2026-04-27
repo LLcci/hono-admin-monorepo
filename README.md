@@ -5,16 +5,19 @@ Hono REST API + Vue 3 管理面板单仓项目。
 ## 技术栈
 
 ### API
+
 - **Hono** - 轻量高性能 Web 框架
 - **@hono/node-server** - Node.js 适配器
 
 ### Web
+
 - **Vue 3** - 渐进式前端框架
 - **Vite** - 下一代前端构建工具
 - **Vue Router** - 官方路由管理
 - **Pinia** - Vue 状态管理
 
 ### 工具链
+
 - **pnpm** - 高性能包管理器
 - **ESLint** - 代码检查
 - **Prettier** - 代码格式化
@@ -69,22 +72,22 @@ pnpm install
 
 ### 开发命令
 
-| 命令 | 说明 |
-|------|------|
-| `pnpm dev` | 同时启动 API 和 Web |
-| `pnpm dev:api` | 仅启动 API (localhost:3001) |
-| `pnpm dev:web` | 仅启动 Web (localhost:3000) |
-| `pnpm build` | 构建所有应用 |
-| `pnpm typecheck` | TypeScript 类型检查 |
+| 命令             | 说明                        |
+| ---------------- | --------------------------- |
+| `pnpm dev`       | 同时启动 API 和 Web         |
+| `pnpm dev:api`   | 仅启动 API (localhost:3001) |
+| `pnpm dev:web`   | 仅启动 Web (localhost:3000) |
+| `pnpm build`     | 构建所有应用                |
+| `pnpm typecheck` | TypeScript 类型检查         |
 
 ### 代码质量
 
-| 命令 | 说明 |
-|------|------|
-| `pnpm lint` | 代码 Lint |
-| `pnpm lint:fix` | 自动修复 Lint 问题 |
-| `pnpm format` | 代码格式化 |
-| `pnpm check` | Lint + 格式化 (推荐) |
+| 命令            | 说明                 |
+| --------------- | -------------------- |
+| `pnpm lint`     | 代码 Lint            |
+| `pnpm lint:fix` | 自动修复 Lint 问题   |
+| `pnpm format`   | 代码格式化           |
+| `pnpm check`    | Lint + 格式化 (推荐) |
 
 ## API 代理
 

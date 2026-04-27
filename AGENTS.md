@@ -23,20 +23,20 @@ hono-admin-monorepo: Monorepo with Hono API server and Vue 3 web admin panel.
 
 ## WHERE TO LOOK
 
-| Task | Location | Notes |
-|------|---------|-------|
-| API routes | apps/api/src/routes/ | Hono route handlers |
-| API middleware | apps/api/src/middleware/ | Custom middleware |
-| Web components | apps/web/src/components/ | Vue components |
-| Web stores | apps/web/src/stores/ | Pinia stores |
-| Web pages | apps/web/src/pages/ | Route pages |
+| Task           | Location                 | Notes               |
+| -------------- | ------------------------ | ------------------- |
+| API routes     | apps/api/src/routes/     | Hono route handlers |
+| API middleware | apps/api/src/middleware/ | Custom middleware   |
+| Web components | apps/web/src/components/ | Vue components      |
+| Web stores     | apps/web/src/stores/     | Pinia stores        |
+| Web pages      | apps/web/src/pages/      | Route pages         |
 
 ## CODE MAP
 
-| Symbol | Type | Location |
-|--------|------|----------|
+| Symbol       | Type  | Location              |
+| ------------ | ----- | --------------------- |
 | api/index.ts | entry | apps/api/src/index.ts |
-| web/main.ts | entry | apps/web/src/main.ts |
+| web/main.ts  | entry | apps/web/src/main.ts  |
 
 ## CONVENTIONS
 

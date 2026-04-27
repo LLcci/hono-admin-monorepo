@@ -5,21 +5,15 @@ import vueParser from 'vue-eslint-parser/index.js';
 
 export default [
   {
-    ignores: [
-      'apps/api/src/__generated__/**',
-      'apps/web/src/auto-imports.d.ts',
-      'dist/**',
-      'node_modules/**',
-      '**/*.json',
-    ],
+    ignores: ['**/dist/**', '**/node_modules/**', '**/*.json']
   },
   // Base config
   {
     rules: {
       'no-console': 'warn',
       'no-debugger': 'warn',
-      'no-unused-vars': 'warn',
-    },
+      'no-unused-vars': 'warn'
+    }
   },
   // Vue files
   {
@@ -28,19 +22,19 @@ export default [
       parser: vueParser,
       parserOptions: {
         ecmaVersion: 2022,
-        sourceType: 'module',
-      },
+        sourceType: 'module'
+      }
     },
     plugins: {
-      vue: vuePlugin,
+      vue: vuePlugin
     },
     rules: {
       ...vuePlugin.configs['vue3-recommended'].rules,
       'vue/multi-word-component-names': 'off',
       'vue/no-v-html': 'off',
       'vue/require-default-prop': 'off',
-      'vue/require-explicit-emits': 'off',
-    },
+      'vue/require-explicit-emits': 'off'
+    }
   },
   // TypeScript files
   {
@@ -49,18 +43,18 @@ export default [
       parser: tsparser,
       parserOptions: {
         ecmaVersion: 2022,
-        sourceType: 'module',
-      },
+        sourceType: 'module'
+      }
     },
     plugins: {
-      '@typescript-eslint': tseslint,
+      '@typescript-eslint': tseslint
     },
     rules: {
       ...tseslint.configs['recommended'].rules,
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-non-null-assertion': 'off',
-    },
-  },
+      '@typescript-eslint/no-non-null-assertion': 'off'
+    }
+  }
 ];
