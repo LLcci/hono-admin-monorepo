@@ -10,7 +10,7 @@ export default [
   // Base config
   {
     rules: {
-      'no-console': 'warn',
+      'no-console': ['error', { allow: ['warn', 'error'] }],
       'no-debugger': 'warn',
       'no-unused-vars': 'warn'
     }
@@ -52,7 +52,7 @@ export default [
     rules: {
       ...tseslint.configs['recommended'].rules,
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off'
     }
