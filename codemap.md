@@ -16,7 +16,7 @@ Monorepo for a Hono-based REST API and a Vue 3 admin panel styled with Element P
 
 - **Monorepo pattern**: pnpm workspaces manage two independently buildable packages under a shared toolchain.
 - **Backend architecture**: Hono application layer with middleware, utility modules, and a Drizzle-backed data access boundary.
-- **Frontend architecture**: Vue 3 SPA using Element Plus for UI, plugin-based composition through Pinia and Vue Router, and Vite auto-import/component resolvers.
+- **Frontend architecture**: Vue 3 SPA using Element Plus for UI, UnoCSS for styling, plugin-based composition through Pinia and Vue Router, and Vite auto-import/component resolvers.
 - **Documentation layout**: `README.md` covers onboarding and commands, this atlas covers architecture and integration, and `AGENTS.md` contains agent-specific operating guidance.
 
 ## Repository Flow

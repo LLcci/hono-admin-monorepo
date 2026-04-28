@@ -34,6 +34,9 @@ Operational notes for agents working in this repository. Keep this file short an
 - Do not use `@ts-ignore`, `@ts-expect-error`, or `as any`
 - Do not leave empty `catch` blocks
 - Do not use `console.log`
+- In `web/`, prefer reusing Element Plus components before building custom UI
+- In `web/`, when styles are needed, use UnoCSS rather than ad hoc handwritten styling approaches
+- In `web/`, prefer icons from `@iconify-json/mdi`
 
 ## Commands
 
@@ -59,3 +62,4 @@ pnpm --filter api db:studio
 - Web dev server is Vite-based; default local port is typically `5173`
 - Auth client defaults to `http://localhost:3001`
 - Log files are written under `api/log/`
+- UnoCSS configuration is centralized in `web/uno.config.ts`

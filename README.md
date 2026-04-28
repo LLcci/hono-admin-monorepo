@@ -5,7 +5,7 @@ Hono REST API + Vue 3 管理后台单仓项目。
 ## 概览
 
 - `api/`：基于 Hono 的后端服务，集成 better-auth、Drizzle ORM、PostgreSQL、Winston
-- `web/`：基于 Vue 3、Vite、Element Plus、Pinia、Vue Router 的前端管理端
+- `web/`：基于 Vue 3、Vite、Element Plus、Pinia、Vue Router、UnoCSS 的前端管理端
 - 包管理：pnpm workspace
 - 代码质量：ESLint + Prettier + lefthook + commitlint
 
@@ -89,6 +89,13 @@ pnpm install
 | `pnpm --filter web build` | 构建前端 |
 | `pnpm --filter web preview` | 预览前端构建产物 |
 | `pnpm --filter web type-check` | 检查前端类型 |
+
+## Web UI 约定
+
+- 组件优先复用 Element Plus，避免重复封装已有通用能力
+- 需要编写样式时，统一使用 UnoCSS，不再新增零散的手写样式方案
+- 图标优先使用 `@iconify-json/mdi` 提供的 Material Design Icons
+- 如需扩展 UnoCSS 能力，优先在 `web/uno.config.ts` 中集中配置，避免组件内各自为政
 
 ## 运行说明
 
