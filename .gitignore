@@ -40,3 +40,4 @@ apps/web/.eslintrc-auto-import.json
 .slim/
 
 auto-imports.d.ts
+components.d.ts
