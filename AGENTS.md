@@ -98,3 +98,14 @@ pnpm --filter api db:studio     # Open Drizzle Studio
 - ESLint: `@typescript-eslint/no-explicit-any: error`
 - ESLint: `@typescript-eslint/no-unused-vars: error` (underscore params exempt)
 - No `apps/` directory — workspace uses `api/` and `web/` directly
+
+## Repository Map
+
+A full codemap is available at `codemap.md` in the project root.
+
+Before working on any task, read `codemap.md` to understand:
+- Project architecture and entry points
+- Directory responsibilities and design patterns
+- Data flow and integration points between modules
+
+For deep work on a specific folder, also read that folder's `codemap.md`.
