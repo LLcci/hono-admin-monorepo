@@ -1,185 +1,129 @@
 # Hono Admin Monorepo
 
-Hono REST API + Vue 3 管理面板单仓项目。
+Hono REST API + Vue 3 管理后台单仓项目。
 
-## 技术栈
+## 概览
 
-### API (`api/`)
+- `api/`：基于 Hono 的后端服务，集成 better-auth、Drizzle ORM、PostgreSQL、Winston
+- `web/`：基于 Vue 3、Vite、Element Plus、Pinia、Vue Router 的前端管理端
+- 包管理：pnpm workspace
+- 代码质量：ESLint + Prettier + lefthook + commitlint
 
-- **Hono** - 轻量高性能 Web 框架
-- **@hono/node-server** - Node.js 适配器
-- **tsx** - TypeScript 执行环境 (开发模式)
-- **better-auth** - 认证授权框架
-- **winston** - 日志系统
-- **winston-daily-rotate-file** - 日志文件轮转
-- **Drizzle ORM** - TypeScript SQL ORM (PostgreSQL)
-- **pg** - node-postgres 驱动
+更详细的目录职责见根目录 [`codemap.md`](./codemap.md)。
 
-### Web (`web/`)
+## 目录结构
 
-- **Vue 3** - 渐进式前端框架
-- **Vite** - 下一代前端构建工具
-- **Vue Router** - 官方路由管理
-- **Pinia** - Vue 状态管理
-- **vite-plugin-vue-devtools** - Vue DevTools 集成
-
-### 工具链
-
-- **pnpm** - 高性能包管理器 (>=10)
-- **ESLint** - 代码检查
-- **Prettier** - 代码格式化
-- **TypeScript** - 类型安全
-- **lefthook** - Git hooks
-- **commitlint** - 提交信息规范
-
-## 项目结构
-
-```
+```text
 .
-├── api/                         # Hono REST API
+├── api/                     # Hono REST API
 │   ├── src/
-│   │   ├── index.ts           # 入口文件
-│   │   ├── db/               # Drizzle 数据库连接
-│   │   │   └── index.ts
-│   │   ├── schema/           # Drizzle 表定义
-│   │   │   ├── index.ts
-│   │   │   └── auth.ts
-│   │   ├── middleware/       # 中间件
-│   │   │   └── logger.ts     # 请求日志中间件
-│   │   └── utils/            # 工具函数
-│   │       └── logger.ts     # winston 日志配置
-│   ├── drizzle.config.ts      # Drizzle Kit 配置
-│   ├── .env                # 环境变量 (drizzle-kit 使用)
-│   ├── .env.development    # 开发环境变量
-│   ├── .env.production     # 生产环境变量
-│   └── tsconfig.json       # TypeScript 配置
-│
-├── web/                         # Vue 3 管理面板
+│   │   ├── index.ts         # 应用入口
+│   │   ├── db/              # Drizzle 数据库连接
+│   │   ├── schema/          # better-auth / Drizzle 表结构
+│   │   ├── middleware/      # 请求日志、鉴权中间件
+│   │   └── utils/           # auth / logger 工具
+│   ├── drizzle.config.ts    # Drizzle Kit 配置
+│   └── package.json
+├── web/                     # Vue 3 管理端
 │   ├── src/
-│   │   ├── App.vue           # 根组件
-│   │   ├── main.ts           # 入口文件
-│   │   ├── router/           # 路由配置
-│   │   │   └── index.ts
-│   │   └── stores/           # Pinia 状态管理
-│   │       └── counter.ts    # 示例 store
-│   ├── vite.config.ts        # Vite 配置
-│   └── tsconfig.*.json       # TypeScript 配置
-│
-├── eslint.config.js          # ESLint 9 配置
-├── .prettierrc              # Prettier 配置
-├── lefthook.yml             # Git hooks 配置
-├── commitlint.config.js     # commitlint 配置
-├── pnpm-workspace.yaml      # pnpm workspace 配置
-└── package.json             # 根配置
+│   │   ├── App.vue          # 当前根认证界面
+│   │   ├── hooks/auth.ts    # better-auth 客户端
+│   │   ├── router/          # Vue Router
+│   │   └── stores/          # Pinia store
+│   ├── vite.config.ts       # Vite 配置
+│   └── package.json
+├── codemap.md               # 仓库级文档地图
+├── eslint.config.js
+├── .prettierrc
+├── lefthook.yml
+├── commitlint.config.js
+├── pnpm-workspace.yaml
+└── package.json
 ```
 
-## 开发
-
-### 环境要求
+## 环境要求
 
 - Node.js >= 20
 - pnpm >= 10
 
-### 安装依赖
+## 安装依赖
 
 ```bash
 pnpm install
 ```
 
-### 开发命令
+## 常用命令
 
-| 命令             | 说明                        |
-| ---------------- | --------------------------- |
-| `pnpm dev`       | 同时启动 API 和 Web         |
-| `pnpm dev:api`   | 仅启动 API (localhost:3001) |
-| `pnpm dev:web`   | 仅启动 Web (localhost:3000) |
-| `pnpm build`     | 构建所有应用                |
-| `pnpm check`     | Lint + 格式化检查           |
-| `pnpm db:generate` | 生成 Drizzle 迁移          |
-| `pnpm db:migrate` | 执行数据库迁移             |
-| `pnpm db:push`   | 推送 schema 到数据库        |
-| `pnpm db:studio` | 打开 Drizzle Studio        |
+### 仓库根目录
 
-### 代码质量
+| 命令 | 说明 |
+| --- | --- |
+| `pnpm dev` | 并行启动 API 和 Web |
+| `pnpm dev:api` | 仅启动 API |
+| `pnpm dev:web` | 仅启动 Web |
+| `pnpm build` | 构建全部包 |
+| `pnpm typecheck` | 运行工作区类型检查 |
+| `pnpm lint` | 运行 ESLint |
+| `pnpm lint:fix` | 自动修复 ESLint 问题 |
+| `pnpm format` | 用 Prettier 格式化仓库 |
+| `pnpm check` | `lint` + `prettier --check` |
 
-| 命令            | 说明                 |
-| --------------- | -------------------- |
-| `pnpm lint`     | 代码 Lint            |
-| `pnpm lint:fix` | 自动修复 Lint 问题   |
-| `pnpm format`   | 代码格式化           |
-| `pnpm check`    | Lint + 格式化 (推荐) |
+### API 包
 
-## API 代理
+以下命令建议在仓库根目录执行：
 
-Web 开发服务器配置了 `/api` 代理到 `http://localhost:3001`，避免跨域问题。
+| 命令 | 说明 |
+| --- | --- |
+| `pnpm --filter api dev` | 启动 API 开发服务 |
+| `pnpm --filter api build` | 构建 API |
+| `pnpm --filter api db:generate` | 生成 Drizzle migration |
+| `pnpm --filter api db:migrate` | 执行 migration |
+| `pnpm --filter api db:push` | 推送 schema 到数据库 |
+| `pnpm --filter api db:studio` | 打开 Drizzle Studio |
 
-## 日志系统
+### Web 包
 
-API 使用 winston 作为日志系统：
+| 命令 | 说明 |
+| --- | --- |
+| `pnpm --filter web dev` | 启动前端开发服务 |
+| `pnpm --filter web build` | 构建前端 |
+| `pnpm --filter web preview` | 预览前端构建产物 |
+| `pnpm --filter web type-check` | 检查前端类型 |
 
-- **控制台输出**: 彩色格式，带时间戳和耗时
-- **文件输出**: 按天轮转，保存在 `log/` 目录，保留 1 天
-- **请求日志中间件**: `api/src/middleware/logger.ts` 记录每个请求的详细信息
+## 运行说明
 
-### 请求日志字段
+- API 默认监听 `PORT`
+- Web 默认由 Vite 启动，本地常见端口为 `5173`
+- `web/src/hooks/auth.ts` 默认将认证请求发送到 `http://localhost:3001`
+- 如果需要统一前缀代理，请在前端或反向代理层补充 `/api` 约定
 
-- `path` - 请求路径
-- `method` - HTTP 方法
-- `status` - 响应状态码
-- `duration` - 请求耗时 (ms)
-- `ip` - 请求来源 IP (支持 x-forwarded-for, cf-connecting-ip)
-
-## 代码规范
+## 代码约定
 
 - 缩进：2 空格
-- 行宽：100 字符
+- 行宽：100
 - 引号：单引号
-- 尾逗号：ES5 风格（无）
+- 分号：必须
+- 尾逗号：ES5 风格（不保留尾逗号）
 
-### 禁止
+### 禁止项
 
-- `@ts-ignore`、`@ts-expect-error`、`as any`
-- 空 catch 块
+- `@ts-ignore`
+- `@ts-expect-error`
+- `as any`
+- 空 `catch` 块
 - 未处理的 Promise rejection
+- `console.log`（允许 `console.warn` / `console.error`）
 
-### 提交规范
+## 提交规范
 
-使用 [Conventional Commits](https://www.conventionalcommits.org/) 格式：
+使用 Conventional Commits，例如：
 
-- `feat:` - 新功能
-- `fix:` - 修复 bug
-- `docs:` - 文档更新
-- `style:` - 代码格式
-- `refactor:` - 重构
-- `chore:` - 构建/工具
+- `feat:` 新功能
+- `fix:` 修复问题
+- `docs:` 文档更新
+- `refactor:` 重构
+- `chore:` 构建或工具调整
 
-### ESLint 规则
+## 相关文档
 
-- `no-console`: 禁止 console (允许 warn, error)
-- `no-debugger`: 警告
-- `no-unused-vars`: 警告
-- `@typescript-eslint/no-explicit-any`: 错误
-- `@typescript-eslint/no-unused-vars`: 错误 (���下划线开头参数除外)
-
-## Git Hooks
-
-使用 lefthook 管理 Git hooks：
-
-- **commit-msg**: 提交信息规范化检查
-- **pre-commit**: 自动修复 Lint 问题
-- **pre-push**: Lint 检查
-
-## 环境变量
-
-### API
-
-| 文件              | 说明   |
-| ----------------- | ------ |
-| `api/.env` | Drizzle Kit 使用 (需包含 DATABASE_URL) |
-| `api/.env.development` | 开发环境 |
-| `api/.env.production`  | 生产环境 |
-
-| 变量 | 说明 |
-|------|------|
-| `PORT` | 服务器端口 (默认 3001) |
-| `DATABASE_URL` | PostgreSQL 连接字符串 |
+- [`codemap.md`](./codemap.md)：仓库总览

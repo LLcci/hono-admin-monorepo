@@ -2,7 +2,7 @@
 
 ## Project Responsibility
 
-Monorepo for a Hono-based REST API and a Vue 3 admin panel. The repository centralizes backend HTTP handling, authentication, PostgreSQL persistence through Drizzle ORM, and a Vite-powered frontend that consumes the API through a development proxy.
+Monorepo for a Hono-based REST API and a Vue 3 admin panel styled with Element Plus. The repository centralizes backend HTTP handling, authentication, PostgreSQL persistence through Drizzle ORM, and a Vite-powered frontend that communicates with the API and better-auth backend.
 
 ## System Entry Points
 
@@ -16,41 +16,33 @@ Monorepo for a Hono-based REST API and a Vue 3 admin panel. The repository centr
 
 - **Monorepo pattern**: pnpm workspaces manage two independently buildable packages under a shared toolchain.
 - **Backend architecture**: Hono application layer with middleware, utility modules, and a Drizzle-backed data access boundary.
-- **Frontend architecture**: Vue 3 SPA using plugin-based composition through Pinia and Vue Router.
-- **Documentation layout**: Folder-local `codemap.md` files describe subsystem responsibilities, while this root atlas provides the cross-repository entry point.
+- **Frontend architecture**: Vue 3 SPA using Element Plus for UI, plugin-based composition through Pinia and Vue Router, and Vite auto-import/component resolvers.
+- **Documentation layout**: `README.md` covers onboarding and commands, this atlas covers architecture and integration, and `AGENTS.md` contains agent-specific operating guidance.
 
 ## Repository Flow
 
 1. Workspace scripts orchestrate backend and frontend commands from the repository root.
 2. The `api/` package accepts HTTP traffic, applies CORS and request logging, routes authentication traffic into better-auth backed by PostgreSQL, and exposes protected session-aware endpoints.
-3. The `web/` package boots a Vue SPA, renders routed views, and accesses backend endpoints through `/api` during development.
+3. The `web/` package boots a Vue SPA, uses a better-auth client for authentication, and consumes backend endpoints provided by the API package.
 4. Shared linting, formatting, and git hooks enforce consistent repository-wide standards before changes are committed.
 
 ## Directory Map
 
-| Directory | Responsibility Summary | Detailed Map |
-|-----------|------------------------|--------------|
-| `api/` | Backend service package implementing the Hono API, auth integration, database wiring, and server-side operational concerns. | [View Map](api/codemap.md) |
-| `api/src/` | Backend bootstrap layer that composes middleware, routes, logger, auth handler, and exported database access. | [View Map](api/src/codemap.md) |
-| `api/src/db/` | Database access boundary exposing the singleton Drizzle client backed by a PostgreSQL pool. | [View Map](api/src/db/codemap.md) |
-| `api/src/schema/` | Authentication-oriented relational schema definitions and ORM relations for Drizzle and better-auth. | [View Map](api/src/schema/codemap.md) |
-| `api/src/middleware/` | HTTP middleware layer for cross-cutting request logging and request metadata capture. | [View Map](api/src/middleware/codemap.md) |
-| `api/src/utils/` | Shared backend utility modules for structured logging and auth system configuration. | [View Map](api/src/utils/codemap.md) |
-| `web/` | Frontend SPA package containing the Vue admin panel, build pipeline, and API proxy integration. | [View Map](web/codemap.md) |
-| `web/src/` | Client application source including app bootstrap, root shell, routing, and state registration. | [View Map](web/src/codemap.md) |
-| `web/src/router/` | Client-side navigation subsystem that constructs and exports the Vue Router instance. | [View Map](web/src/router/codemap.md) |
-| `web/src/stores/` | Reactive state management layer implemented with Pinia setup stores. | [View Map](web/src/stores/codemap.md) |
+| Directory | Responsibility |
+|-----------|----------------|
+| `api/` | Hono API package providing authentication, middleware, database access, and runtime configuration. |
+| `web/` | Vue 3 SPA package providing the admin UI, auth client integration, routing, and state management. |
 
 ## Root Assets
 
 - `package.json`: Declares workspace scripts and shared dev dependencies.
 - `pnpm-lock.yaml`: Captures resolved dependency graph for the monorepo.
 - `README.md`: Human-oriented project introduction.
-- `AGENTS.md`: Auto-loaded operational guidance for agents working in this repository.
+- `AGENTS.md`: Concise agent guidance and links back to this atlas.
 - `.slim/codemap.json`: Codemap tracking state used to detect future repository changes.
 
 ## Integration Points
 
-- `web/` consumes backend endpoints provided by `api/`, using Vite proxying in local development.
+- `web/` consumes backend endpoints provided by `api/`, with auth requests configured through the frontend auth client.
 - `api/` depends on PostgreSQL connectivity and auth/environment configuration from runtime variables.
 - Repository-wide tool configuration applies uniformly to both packages through shared root config files.

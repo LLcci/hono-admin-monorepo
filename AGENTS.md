@@ -1,114 +1,61 @@
 # PROJECT KNOWLEDGE BASE
 
-**Generated:** 2026-04-27
-**Commit:** ec0071e
-**Branch:** main
+## Purpose
 
-## OVERVIEW
+Operational notes for agents working in this repository. Keep this file short and defer architecture details to `codemap.md`.
 
-Hono REST API + Vue 3 管理面板 monorepo using pnpm workspaces.
+## Read First
 
-## STRUCTURE
+1. `codemap.md` — repository-level structure and integration map
+2. `README.md` — human-facing entry doc with commands and conventions
 
-```
-./
-├── api/                      # Hono REST API
-│   ├── src/
-│   │   ├── index.ts        # Entry point (GET /, /hello)
-│   │   ├── db/            # Drizzle database connection
-│   │   │   └── index.ts   # db instance export
-│   │   ├── schema/        # Drizzle table definitions
-│   │   │   ├── index.ts   # Schema exports
-│   │   │   └── users.ts  # Example table
-│   │   ├── middleware/     # Custom middleware
-│   │   │   ├── auth.ts    # Session guard middleware for protected routes
-│   │   │   └── logger.ts  # Request logging + IP detection
-│   │   └── utils/         # Utilities
-│   │       └── logger.ts  # Winston config (daily rotate)
-│   ├── drizzle.config.ts # Drizzle Kit config
-│   └── .env              # Environment variables
-│
-├── web/                       # Vue 3 admin panel
-│   └── src/
-│       ├── App.vue          # Root component
-│       ├── main.ts          # Entry point
-│       ├── router/          # Vue Router
-│       └── stores/          # Pinia stores
-│
-├── eslint.config.js          # ESLint 9 (TypeScript + Vue)
-├── .prettierrc               # 2 spaces, 100 width, single quotes
-├── lefthook.yml              # pre-commit (lint --fix), pre-push (lint)
-├── commitlint.config.js      # @commitlint/config-conventional
-└── pnpm-workspace.yaml       # api + web packages
-```
+## Fast Pointers
 
-## WHERE TO LOOK
+| Task | Primary file |
+| --- | --- |
+| API bootstrap and routes | `api/src/index.ts` |
+| Auth guard middleware | `api/src/middleware/auth.ts` |
+| Request logging | `api/src/middleware/logger.ts` |
+| better-auth server config | `api/src/utils/auth.ts` |
+| Drizzle connection | `api/src/db/index.ts` |
+| Auth schema | `api/src/schema/auth.ts` |
+| Web bootstrap | `web/src/main.ts` |
+| Root auth screen | `web/src/App.vue` |
+| Auth client | `web/src/hooks/auth.ts` |
+| Router | `web/src/router/index.ts` |
+| Pinia stores | `web/src/stores/` |
 
-| Task | Location | Notes |
-|------|----------|-------|
-| API entry | `api/src/index.ts` | Routes + middleware registration, CORS, error handling |
-| Database | `api/src/db/index.ts` | Drizzle db instance |
-| Schema | `api/src/schema/*.ts` | Drizzle table definitions |
-| Drizzle config | `api/drizzle.config.ts` | Migration settings |
-| API logs | `api/src/middleware/logger.ts` | IP detection (x-forwarded-for, cf-connecting-ip) |
-| Route auth guard | `api/src/middleware/auth.ts` | Validates session and stores it on Hono context |
-| Winston config | `api/src/utils/logger.ts` | Daily rotate, 1d retention |
-| Web entry | `web/src/main.ts` | Vue + Pinia + Router setup |
-| Vue stores | `web/src/stores/` | Pinia state management |
-| Vue router | `web/src/router/` | Vue Router config |
+## Project Rules
 
-## CONVENTIONS (THIS PROJECT)
+- Indent with 2 spaces
+- Use single quotes
+- Keep semicolons
+- Use explicit `.js` extensions where TypeScript config requires them
+- Do not use `@ts-ignore`, `@ts-expect-error`, or `as any`
+- Do not leave empty `catch` blocks
+- Do not use `console.log`
 
-- **Indent**: 2 spaces
-- **Line width**: 100 chars
-- **Quotes**: single quotes
-- **Semicolons**: always
-- **Trailing commas**: none (ES5 style)
-- **Module syntax**: `verbatimModuleSyntax` (explicit `.js` extensions in imports)
-
-## ANTI-PATTERNS (THIS PROJECT)
-
-- `@ts-ignore`, `@ts-expect-error`, `as any` — **NEVER**
-- Empty catch blocks — **NEVER**
-- `console.log` (warn/error allowed) — error in ESLint
-
-## COMMANDS
+## Commands
 
 ```bash
-pnpm dev          # Start API (3001) + Web (3000, proxies /api)
-pnpm dev:api      # API only
-pnpm dev:web     # Web only
-pnpm build        # Build all
-pnpm lint         # ESLint check
-pnpm lint:fix     # Auto-fix
-pnpm format       # Prettier
-pnpm check        # lint + format check
-
-# Database (run from api package)
-pnpm --filter api db:generate   # Generate migrations
-pnpm --filter api db:migrate    # Run migrations
-pnpm --filter api db:push       # Push schema to DB
-pnpm --filter api db:studio     # Open Drizzle Studio
+pnpm dev
+pnpm dev:api
+pnpm dev:web
+pnpm build
+pnpm typecheck
+pnpm lint
+pnpm lint:fix
+pnpm format
+pnpm check
+pnpm --filter api db:generate
+pnpm --filter api db:migrate
+pnpm --filter api db:push
+pnpm --filter api db:studio
 ```
 
-## NOTES
+## Notes
 
-- API port: 3001 (env: `PORT`)
-- Web port: 3000 (proxies `/api` → localhost:3001)
-- Log files: `api/log/` (auto-created, gitignored)
-- Drizzle migrations: `api/drizzle/`
-- ESLint: `@typescript-eslint/no-explicit-any: error`
-- ESLint: `@typescript-eslint/no-unused-vars: error` (underscore params exempt)
-- No `apps/` directory — workspace uses `api/` and `web/` directly
-- Protected API routes can reuse `c.get('session')` after `requireAuthMiddleware`
-
-## Repository Map
-
-A full codemap is available at `codemap.md` in the project root.
-
-Before working on any task, read `codemap.md` to understand:
-- Project architecture and entry points
-- Directory responsibilities and design patterns
-- Data flow and integration points between modules
-
-For deep work on a specific folder, also read that folder's `codemap.md`.
+- API default port is controlled by `PORT`
+- Web dev server is Vite-based; default local port is typically `5173`
+- Auth client defaults to `http://localhost:3001`
+- Log files are written under `api/log/`
