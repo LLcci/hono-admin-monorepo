@@ -30,5 +30,8 @@
     "prettier": "^3.0.0",
     "typescript": "^6.0.0",
     "vue-eslint-parser": "^9.0.0"
+  },
+  "dependencies": {
+    "better-auth": "^1.6.9"
   }
 }

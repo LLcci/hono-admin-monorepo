@@ -38,3 +38,5 @@ apps/web/.eslintrc-auto-import.json
 .pnpm-store/
 
 .slim/
+
+auto-imports.d.ts

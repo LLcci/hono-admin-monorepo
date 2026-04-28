@@ -32,8 +32,9 @@ api/
 1. Server starts on `PORT` (default 3001)
 2. `loggerMiddleware` logs every incoming request
 3. Root route `/` returns "Hello Hono!"
-4. Auth routes `/api/auth/*` handled by better-auth
-5. All other routes fall through to Hono's 404 handler
+4. Protected route `/api/me` validates the current session through auth middleware and returns the cached session payload
+5. Auth routes `/api/auth/*` handled by better-auth
+6. All other routes fall through to Hono's 404 handler
 
 ## Integration
 

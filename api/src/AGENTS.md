@@ -20,6 +20,7 @@ api/src/
 │   ├── index.ts       # Schema exports
 │   └── auth.ts       # Table definitions
 ├── middleware/
+│   ├── auth.ts       # Session guard for protected routes
 │   └── logger.ts     # Request logging middleware
 └── utils/
     └── logger.ts     # Winston logger (daily rotate, 1d retention)
@@ -47,7 +48,8 @@ Tables in `src/schema/auth.ts` (better-auth compatible):
 | Method | Path | Handler |
 |--------|------|---------|
 | GET | `/` | `c.text('Hello Hono!')` |
-| GET | `/hello` | `c.text('Hello Hono!')` |
+| GET | `/api/me` | `requireAuthMiddleware` + `c.json(c.get('session'))` |
+| GET/POST | `/api/auth/*` | `auth.handler(c.req.raw)` |
 
 ## MIDDLEWARE
 
@@ -55,6 +57,11 @@ Tables in `src/schema/auth.ts` (better-auth compatible):
 - Records: `path`, `method`, `status`, `duration` (ms), `ip`
 - IP detection priority: `x-forwarded-for` → `cf-connecting-ip` → `remote.address`
 - Uses `routePath(c, -1)` for matched route path
+
+### auth.ts
+- Calls `auth.api.getSession({ headers: c.req.raw.headers })`
+- Rejects missing session with `HTTPException(401)`
+- Stores validated session on Hono context as `session`
 
 ## LOGGER CONFIG
 
@@ -71,3 +78,4 @@ Tables in `src/schema/auth.ts` (better-auth compatible):
 | `PORT` | 3001 | Server port |
 | `NODE_ENV` | development | Env mode |
 | `DATABASE_URL` | - | PostgreSQL connection string |
+| `BETTER_AUTH_URL` | - | Allowed CORS origin and auth base URL |

@@ -21,6 +21,7 @@ Hono REST API + Vue 3 管理面板 monorepo using pnpm workspaces.
 │   │   │   ├── index.ts   # Schema exports
 │   │   │   └── users.ts  # Example table
 │   │   ├── middleware/     # Custom middleware
+│   │   │   ├── auth.ts    # Session guard middleware for protected routes
 │   │   │   └── logger.ts  # Request logging + IP detection
 │   │   └── utils/         # Utilities
 │   │       └── logger.ts  # Winston config (daily rotate)
@@ -45,11 +46,12 @@ Hono REST API + Vue 3 管理面板 monorepo using pnpm workspaces.
 
 | Task | Location | Notes |
 |------|----------|-------|
-| API entry | `api/src/index.ts` | Routes + middleware registration |
+| API entry | `api/src/index.ts` | Routes + middleware registration, CORS, error handling |
 | Database | `api/src/db/index.ts` | Drizzle db instance |
 | Schema | `api/src/schema/*.ts` | Drizzle table definitions |
 | Drizzle config | `api/drizzle.config.ts` | Migration settings |
 | API logs | `api/src/middleware/logger.ts` | IP detection (x-forwarded-for, cf-connecting-ip) |
+| Route auth guard | `api/src/middleware/auth.ts` | Validates session and stores it on Hono context |
 | Winston config | `api/src/utils/logger.ts` | Daily rotate, 1d retention |
 | Web entry | `web/src/main.ts` | Vue + Pinia + Router setup |
 | Vue stores | `web/src/stores/` | Pinia state management |
@@ -98,6 +100,7 @@ pnpm --filter api db:studio     # Open Drizzle Studio
 - ESLint: `@typescript-eslint/no-explicit-any: error`
 - ESLint: `@typescript-eslint/no-unused-vars: error` (underscore params exempt)
 - No `apps/` directory — workspace uses `api/` and `web/` directly
+- Protected API routes can reuse `c.get('session')` after `requireAuthMiddleware`
 
 ## Repository Map
 

@@ -8,7 +8,7 @@ Monorepo for a Hono-based REST API and a Vue 3 admin panel. The repository centr
 
 - `package.json`: Workspace-level scripts for development, build, linting, formatting, and hooks installation.
 - `pnpm-workspace.yaml`: Declares the `api/` and `web/` workspace packages.
-- `api/src/index.ts`: Backend application bootstrap, middleware registration, route definition, and server startup.
+- `api/src/index.ts`: Backend application bootstrap, CORS and logging middleware registration, protected route definition, auth handler wiring, and server startup.
 - `web/src/main.ts`: Frontend bootstrap, plugin registration, and root app mount.
 - `eslint.config.js`, `.prettierrc`, `lefthook.yml`, `commitlint.config.js`: Shared repository policy for code style and commit workflow.
 
@@ -22,7 +22,7 @@ Monorepo for a Hono-based REST API and a Vue 3 admin panel. The repository centr
 ## Repository Flow
 
 1. Workspace scripts orchestrate backend and frontend commands from the repository root.
-2. The `api/` package accepts HTTP traffic, logs requests, and routes authentication traffic into better-auth backed by PostgreSQL.
+2. The `api/` package accepts HTTP traffic, applies CORS and request logging, routes authentication traffic into better-auth backed by PostgreSQL, and exposes protected session-aware endpoints.
 3. The `web/` package boots a Vue SPA, renders routed views, and accesses backend endpoints through `/api` during development.
 4. Shared linting, formatting, and git hooks enforce consistent repository-wide standards before changes are committed.
 

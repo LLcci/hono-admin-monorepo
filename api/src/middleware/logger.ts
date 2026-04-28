@@ -23,9 +23,8 @@ export const loggerMiddleware = createMiddleware(async (c, next) => {
 
   const duration = Date.now() - start;
 
-  logger.info(path, {
+  logger.info(`${method} ${path}`, {
     ip,
-    method,
     status,
     duration
   });
