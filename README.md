@@ -11,6 +11,8 @@ Hono REST API + Vue 3 管理面板单仓项目。
 - **tsx** - TypeScript 执行环境 (开发模式)
 - **winston** - 日志系统
 - **winston-daily-rotate-file** - 日志文件轮转
+- **Drizzle ORM** - TypeScript SQL ORM (PostgreSQL)
+- **pg** - node-postgres 驱动
 
 ### Web (`web/`)
 
@@ -36,13 +38,20 @@ Hono REST API + Vue 3 管理面板单仓项目。
 ├── api/                         # Hono REST API
 │   ├── src/
 │   │   ├── index.ts           # 入口文件
+│   │   ├── db/               # Drizzle 数据库连接
+│   │   │   └── index.ts
+│   │   ├── schema/           # Drizzle 表定义
+│   │   │   ├── index.ts
+│   │   │   └── users.ts
 │   │   ├── middleware/       # 中间件
 │   │   │   └── logger.ts     # 请求日志中间件
 │   │   └── utils/            # 工具函数
 │   │       └── logger.ts     # winston 日志配置
-│   ├── .env.development      # 开发环境变量
-│   ├── .env.production       # 生产环境变量
-│   └── tsconfig.json         # TypeScript 配置
+│   ├── drizzle.config.ts      # Drizzle Kit 配置
+│   ├── .env                # 环境变量 (drizzle-kit 使用)
+│   ├── .env.development    # 开发环境变量
+│   ├── .env.production     # 生产环境变量
+│   └── tsconfig.json       # TypeScript 配置
 │
 ├── web/                         # Vue 3 管理面板
 │   ├── src/
@@ -84,8 +93,11 @@ pnpm install
 | `pnpm dev:api`   | 仅启动 API (localhost:3001) |
 | `pnpm dev:web`   | 仅启动 Web (localhost:3000) |
 | `pnpm build`     | 构建所有应用                |
-| `pnpm typecheck` | TypeScript 类型检查         |
 | `pnpm check`     | Lint + 格式化检查           |
+| `pnpm db:generate` | 生成 Drizzle 迁移          |
+| `pnpm db:migrate` | 执行数据库迁移             |
+| `pnpm db:push`   | 推送 schema 到数据库        |
+| `pnpm db:studio` | 打开 Drizzle Studio        |
 
 ### 代码质量
 
@@ -162,7 +174,11 @@ API 使用 winston 作为日志系统：
 
 | 文件              | 说明   |
 | ----------------- | ------ |
+| `api/.env` | Drizzle Kit 使用 (需包含 DATABASE_URL) |
 | `api/.env.development` | 开发环境 |
 | `api/.env.production`  | 生产环境 |
 
-默认端口: `3001` (可通过 `PORT` 环境变量修改)
+| 变量 | 说明 |
+|------|------|
+| `PORT` | 服务器端口 (默认 3001) |
+| `DATABASE_URL` | PostgreSQL 连接字符串 |

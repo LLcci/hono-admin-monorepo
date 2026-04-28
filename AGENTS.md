@@ -13,12 +13,19 @@ Hono REST API + Vue 3 管理面板 monorepo using pnpm workspaces.
 ```
 ./
 ├── api/                      # Hono REST API
-│   └── src/
-│       ├── index.ts        # Entry point (GET /, /hello)
-│       ├── middleware/     # Custom middleware
-│       │   └── logger.ts  # Request logging + IP detection
-│       └── utils/         # Utilities
-│           └── logger.ts  # Winston config (daily rotate)
+│   ├── src/
+│   │   ├── index.ts        # Entry point (GET /, /hello)
+│   │   ├── db/            # Drizzle database connection
+│   │   │   └── index.ts   # db instance export
+│   │   ├── schema/        # Drizzle table definitions
+│   │   │   ├── index.ts   # Schema exports
+│   │   │   └── users.ts  # Example table
+│   │   ├── middleware/     # Custom middleware
+│   │   │   └── logger.ts  # Request logging + IP detection
+│   │   └── utils/         # Utilities
+│   │       └── logger.ts  # Winston config (daily rotate)
+│   ├── drizzle.config.ts # Drizzle Kit config
+│   └── .env              # Environment variables
 │
 ├── web/                       # Vue 3 admin panel
 │   └── src/
@@ -39,6 +46,9 @@ Hono REST API + Vue 3 管理面板 monorepo using pnpm workspaces.
 | Task | Location | Notes |
 |------|----------|-------|
 | API entry | `api/src/index.ts` | Routes + middleware registration |
+| Database | `api/src/db/index.ts` | Drizzle db instance |
+| Schema | `api/src/schema/*.ts` | Drizzle table definitions |
+| Drizzle config | `api/drizzle.config.ts` | Migration settings |
 | API logs | `api/src/middleware/logger.ts` | IP detection (x-forwarded-for, cf-connecting-ip) |
 | Winston config | `api/src/utils/logger.ts` | Daily rotate, 1d retention |
 | Web entry | `web/src/main.ts` | Vue + Pinia + Router setup |
@@ -71,6 +81,12 @@ pnpm lint         # ESLint check
 pnpm lint:fix     # Auto-fix
 pnpm format       # Prettier
 pnpm check        # lint + format check
+
+# Database (run from api package)
+pnpm --filter api db:generate   # Generate migrations
+pnpm --filter api db:migrate    # Run migrations
+pnpm --filter api db:push       # Push schema to DB
+pnpm --filter api db:studio     # Open Drizzle Studio
 ```
 
 ## NOTES
@@ -78,6 +94,7 @@ pnpm check        # lint + format check
 - API port: 3001 (env: `PORT`)
 - Web port: 3000 (proxies `/api` → localhost:3001)
 - Log files: `api/log/` (auto-created, gitignored)
+- Drizzle migrations: `api/drizzle/`
 - ESLint: `@typescript-eslint/no-explicit-any: error`
 - ESLint: `@typescript-eslint/no-unused-vars: error` (underscore params exempt)
 - No `apps/` directory — workspace uses `api/` and `web/` directly

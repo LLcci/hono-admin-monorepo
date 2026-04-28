@@ -2,6 +2,7 @@
 
 **Package:** `api/`
 **Framework:** Hono + @hono/node-server
+**Database:** Drizzle ORM + PostgreSQL (node-postgres)
 
 ## ENTRY POINT
 
@@ -12,11 +13,22 @@
 ```
 api/src/
 ├── index.ts           # App init, route definitions, serve()
+├── db/
+│   └── index.ts        # Drizzle database instance
+├── schema/
+│   ├── index.ts       # Schema exports
+│   └── users.ts       # Table definitions
 ├── middleware/
 │   └── logger.ts     # Request logging middleware
 └── utils/
     └── logger.ts     # Winston logger (daily rotate, 1d retention)
 ```
+
+## DATABASE
+
+- **Connection:** `src/db/index.ts` exports `db` instance
+- **Schema:** Define tables in `src/schema/*.ts`, export from `index.ts`
+- **Config:** `drizzle.config.ts` in `api/` root
 
 ## CURRENT ROUTES
 
@@ -46,3 +58,4 @@ api/src/
 |----------|---------|---------|
 | `PORT` | 3001 | Server port |
 | `NODE_ENV` | development | Env mode |
+| `DATABASE_URL` | - | PostgreSQL connection string |

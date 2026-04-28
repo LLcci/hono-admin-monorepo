@@ -2,6 +2,9 @@ import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { loggerMiddleware } from './middleware/logger.js';
 import { logger } from './utils/logger.js';
+import { db } from './db/index.js';
+
+export { db };
 
 const app = new Hono();
 app.use(loggerMiddleware);
