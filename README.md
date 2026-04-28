@@ -9,6 +9,7 @@ Hono REST API + Vue 3 管理面板单仓项目。
 - **Hono** - 轻量高性能 Web 框架
 - **@hono/node-server** - Node.js 适配器
 - **tsx** - TypeScript 执行环境 (开发模式)
+- **better-auth** - 认证授权框架
 - **winston** - 日志系统
 - **winston-daily-rotate-file** - 日志文件轮转
 - **Drizzle ORM** - TypeScript SQL ORM (PostgreSQL)
@@ -42,7 +43,7 @@ Hono REST API + Vue 3 管理面板单仓项目。
 │   │   │   └── index.ts
 │   │   ├── schema/           # Drizzle 表定义
 │   │   │   ├── index.ts
-│   │   │   └── users.ts
+│   │   │   └── auth.ts
 │   │   ├── middleware/       # 中间件
 │   │   │   └── logger.ts     # 请求日志中间件
 │   │   └── utils/            # 工具函数

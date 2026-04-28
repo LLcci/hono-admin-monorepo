@@ -2,6 +2,7 @@
 
 **Package:** `api/`
 **Framework:** Hono + @hono/node-server
+**Auth:** better-auth
 **Database:** Drizzle ORM + PostgreSQL (node-postgres)
 
 ## ENTRY POINT
@@ -17,7 +18,7 @@ api/src/
 │   └── index.ts        # Drizzle database instance
 ├── schema/
 │   ├── index.ts       # Schema exports
-│   └── users.ts       # Table definitions
+│   └── auth.ts       # Table definitions
 ├── middleware/
 │   └── logger.ts     # Request logging middleware
 └── utils/
@@ -29,6 +30,17 @@ api/src/
 - **Connection:** `src/db/index.ts` exports `db` instance
 - **Schema:** Define tables in `src/schema/*.ts`, export from `index.ts`
 - **Config:** `drizzle.config.ts` in `api/` root
+
+## AUTH SCHEMA
+
+Tables in `src/schema/auth.ts` (better-auth compatible):
+
+| Table | Purpose |
+|-------|---------|
+| `user` | Users (id, name, email, image, username, displayUsername) |
+| `session` | Active sessions with token, IP, userAgent |
+| `account` | OAuth/provider account bindings |
+| `verification` | Email verification tokens |
 
 ## CURRENT ROUTES
 
