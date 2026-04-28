@@ -1,8 +1,9 @@
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
-import { loggerMiddleware } from './middleware/logger.js';
-import { logger } from './utils/logger.js';
 import { db } from './db/index.js';
+import { loggerMiddleware } from './middleware/logger.js';
+import { auth } from './utils/auth.js';
+import { logger } from './utils/logger.js';
 
 export { db };
 
@@ -12,9 +13,8 @@ app.use(loggerMiddleware);
 app.get('/', (c) => {
   return c.text('Hello Hono!');
 });
-app.get('/hello', (c) => {
-  return c.text('Hello Hono!');
-});
+
+app.on(['POST', 'GET'], '/api/auth/*', (c) => auth.handler(c.req.raw));
 
 serve(
   {
