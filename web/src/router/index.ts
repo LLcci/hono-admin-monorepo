@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import { authClient } from '@/hooks/auth';
+import { useAuthStore } from '@/stores/auth';
 
 const HOME_PATH = '/';
 const LOGIN_PATH = '/login';
@@ -22,8 +22,11 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
-  const { data, error } = await authClient.getSession();
-  const isAuthenticated = Boolean(data?.session && !error);
+  const authStore = useAuthStore();
+
+  authStore.setNavigating(true);
+
+  const isAuthenticated = await authStore.initializeSession();
 
   if (isAuthenticated && to.path === LOGIN_PATH) {
     return HOME_PATH;
@@ -32,6 +35,18 @@ router.beforeEach(async (to) => {
   if (!isAuthenticated && to.path !== LOGIN_PATH) {
     return { path: LOGIN_PATH, query: { redirect: to.fullPath } };
   }
+});
+
+router.afterEach(() => {
+  const authStore = useAuthStore();
+
+  authStore.setNavigating(false);
+});
+
+router.onError(() => {
+  const authStore = useAuthStore();
+
+  authStore.setNavigating(false);
 });
 
 export default router;

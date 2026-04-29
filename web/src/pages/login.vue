@@ -5,9 +5,11 @@ import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { signIn } from '@/hooks/auth';
+import { useAuthStore } from '@/stores/auth';
 
 const route = useRoute();
 const router = useRouter();
+const authStore = useAuthStore();
 
 const formRef = ref<FormInstance>();
 const form = reactive({
@@ -46,8 +48,11 @@ async function handleSignIn() {
       return;
     }
 
-    const redirect = (route.query.redirect as string) || '/';
-    await router.push(redirect);
+    const redirect = typeof route.query.redirect === 'string' && route.query.redirect.startsWith('/')
+      ? route.query.redirect
+      : '/';
+    await authStore.initializeSession({ force: true, showLoading: false });
+    await router.replace(redirect);
   } catch {
     error.value = '登录失败，请稍后重试';
   } finally {
@@ -208,4 +213,3 @@ async function handleSignIn() {
     </div>
   </div>
 </template>
-

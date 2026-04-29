@@ -22,6 +22,7 @@ Operational notes for agents working in this repository. Keep this file short an
 | Web bootstrap | `web/src/main.ts` |
 | App shell / router outlet | `web/src/App.vue` |
 | Auth client | `web/src/hooks/auth.ts` |
+| Auth store (session / loading state) | `web/src/stores/auth.ts` |
 | Login page | `web/src/pages/login.vue` |
 | Router | `web/src/router/index.ts` |
 | Route auth guard | `web/src/router/index.ts` |
