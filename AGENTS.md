@@ -20,9 +20,11 @@ Operational notes for agents working in this repository. Keep this file short an
 | Drizzle connection | `api/src/db/index.ts` |
 | Auth schema | `api/src/schema/auth.ts` |
 | Web bootstrap | `web/src/main.ts` |
-| Root auth screen | `web/src/App.vue` |
+| App shell / router outlet | `web/src/App.vue` |
 | Auth client | `web/src/hooks/auth.ts` |
+| Login page | `web/src/pages/login.vue` |
 | Router | `web/src/router/index.ts` |
+| Route auth guard | `web/src/router/index.ts` |
 | Pinia stores | `web/src/stores/` |
 
 ## Project Rules

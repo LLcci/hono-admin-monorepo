@@ -26,8 +26,9 @@ Hono REST API + Vue 3 管理后台单仓项目。
 │   └── package.json
 ├── web/                     # Vue 3 管理端
 │   ├── src/
-│   │   ├── App.vue          # 当前根认证界面
+│   │   ├── App.vue          # 根应用壳，仅承载路由出口
 │   │   ├── hooks/auth.ts    # better-auth 客户端
+│   │   ├── pages/           # 登录页与业务页面
 │   │   ├── router/          # Vue Router
 │   │   └── stores/          # Pinia store
 │   ├── vite.config.ts       # Vite 配置
@@ -102,6 +103,7 @@ pnpm install
 - API 默认监听 `PORT`
 - Web 默认由 Vite 启动，本地常见端口为 `5173`
 - `web/src/hooks/auth.ts` 默认将认证请求发送到 `http://localhost:3001`
+- Web 端登录流转基于独立登录页与 Vue Router 全局守卫；未登录访问受保护页面时会跳转到 `/login`
 - 如果需要统一前缀代理，请在前端或反向代理层补充 `/api` 约定
 
 ## 代码约定

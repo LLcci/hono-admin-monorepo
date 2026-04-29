@@ -39,5 +39,7 @@ apps/web/.eslintrc-auto-import.json
 
 .slim/
 
+.opencode/
+
 auto-imports.d.ts
 components.d.ts
